@@ -5,6 +5,8 @@ import { state, State } from './state';
 import { mutations, Mutations } from './mutations';
 import { actions, Actions } from './actions';
 import { getters, Getters } from './getters';
+import user, { UserMutations, UserState } from './user';
+import { UserActions } from './user/actions';
 
 export const store = createStore({
   state,
@@ -12,24 +14,34 @@ export const store = createStore({
   actions,
   getters,
   modules: {
+    user,
   },
 });
 
+export type MutationsCombination = Mutations & UserMutations
+
+export type ActionsCombination = Actions & UserActions
+
+const stateCombination = {
+  ...state,
+  user: user.state,
+};
+
 export type Store = Omit<
-  VuexStore<State>,
+  VuexStore<typeof stateCombination>,
   'getters' | 'commit' | 'dispatch'
   > & {
-    commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
+    commit<K extends keyof MutationsCombination, P extends Parameters<MutationsCombination[K]>[1]>(
       key: K,
       payload: P,
       options?: CommitOptions
-    ): ReturnType<Mutations[K]>;
+    ): ReturnType<MutationsCombination[K]>;
   } & {
-    dispatch<K extends keyof Actions>(
+    dispatch<K extends keyof ActionsCombination>(
       key: K,
-      payload: Parameters<Actions[K]>[1],
+      payload: Parameters<ActionsCombination[K]>[1],
       options?: DispatchOptions
-    ): ReturnType<Actions[K]>;
+    ): ReturnType<ActionsCombination[K]>;
   } & {
     getters: {
       [K in keyof Getters]: ReturnType<Getters[K]>
