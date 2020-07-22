@@ -1,4 +1,5 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
+import userRoutes from './user';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,6 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  ...userRoutes,
 ];
 
 const router = createRouter({

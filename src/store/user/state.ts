@@ -1,7 +1,9 @@
+import { UserBasicInfo } from '@/api/user';
+
 export interface UserState {
-  id: string | null;
+  basicInfo: UserBasicInfo | null;
 }
 
 export const state: UserState = {
-  id: null,
+  basicInfo: null,
 };

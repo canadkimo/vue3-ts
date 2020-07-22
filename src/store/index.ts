@@ -1,11 +1,12 @@
+/* eslint-disable import/no-cycle */
 import {
-  createStore, Store as VuexStore, CommitOptions, DispatchOptions,
+  createStore, Store as VuexStore, CommitOptions, DispatchOptions, ActionContext,
 } from 'vuex';
-import { state, State } from './state';
+import { state } from './state';
 import { mutations, Mutations } from './mutations';
 import { actions, Actions } from './actions';
 import { getters, Getters } from './getters';
-import user, { UserMutations, UserState } from './user';
+import user, { UserMutations } from './user';
 import { UserActions } from './user/actions';
 
 export const store = createStore({

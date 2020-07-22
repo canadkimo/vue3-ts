@@ -1,16 +1,17 @@
 import { MutationTree } from 'vuex';
+import { UserBasicInfo } from '@/api/user';
 import { UserState } from './state';
 
 export enum UserMutationTypes {
-  SET_USER_ID = 'user/SET_USER_ID'
+  SET_BASIC_INFO = 'user/SET_BASIC_INFO'
 }
 
 export type UserMutations<S = UserState> = {
-  [UserMutationTypes.SET_USER_ID](state: S, userID: string): void;
+  [UserMutationTypes.SET_BASIC_INFO](state: S, userInfo: UserBasicInfo): void;
 };
 
 export const mutations: MutationTree<UserState> & UserMutations = {
-  [UserMutationTypes.SET_USER_ID](state, userID: string) {
-    state.id = userID;
+  [UserMutationTypes.SET_BASIC_INFO](state, userInfo: UserBasicInfo) {
+    state.basicInfo = userInfo;
   },
 };

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { ActionContext, ActionTree } from 'vuex';
+import { ActionTree, ActionContext } from 'vuex';
 import { MutationTypes, Mutations } from './mutations';
 import { State } from './state';
 
@@ -7,12 +7,12 @@ export enum ActionTypes {
   GET_COUNTER = 'GET_COUNTER'
 }
 
-export type ArgumentedActionContext = {
+export type ArgumentedActionContext = Omit<ActionContext<State, State>, 'commit'> & {
   commit<K extends keyof Mutations>(
     key: K,
     payload: Parameters<Mutations[K]>[1],
   ): ReturnType<Mutations[K]>;
-} & Omit<ActionContext<State, State>, 'commit'>;
+};
 
 export interface Actions {
   [ActionTypes.GET_COUNTER](

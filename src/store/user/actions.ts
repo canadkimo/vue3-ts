@@ -1,23 +1,33 @@
 /* eslint-disable import/no-cycle */
-import { ActionTree } from 'vuex';
+import { ActionTree, ActionContext } from 'vuex';
+import { getUserBasicInfo } from '@/api/user';
 import { UserState } from './state';
 import { State } from '../state';
-import { ArgumentedActionContext } from '../actions';
-import { UserMutationTypes } from './mutations';
+import { UserMutationTypes, UserMutations } from './mutations';
 
 export enum UserActionTypes {
-  SET_USER_ID = 'user/SET_USER_ID'
+  GET_USER_BASIC_INFO = 'user/GET_USER_BASIC_INFO'
 }
 
+export type ArgumentedActionContext = Omit<ActionContext<UserState, State>, 'commit'> & {
+  commit<K extends keyof UserMutations>(
+    key: K,
+    payload: Parameters<UserMutations[K]>[1],
+  ): ReturnType<UserMutations[K]>;
+};
+
 export interface UserActions {
-  [UserActionTypes.SET_USER_ID](
+  [UserActionTypes.GET_USER_BASIC_INFO](
     { commit }: ArgumentedActionContext,
-    payload: string
+    userID: string
   ): void;
 }
 
-export const actions: ActionTree<UserState, State> = {
-  [UserActionTypes.SET_USER_ID]({ commit }, userID: string) {
-    commit(UserMutationTypes.SET_USER_ID, userID);
+export const actions: ActionTree<UserState, State> & UserActions = {
+  async [UserActionTypes.GET_USER_BASIC_INFO]({ commit }, userID: string) {
+    const response = await getUserBasicInfo(userID);
+    if (response.isSuccess) {
+      commit(UserMutationTypes.SET_BASIC_INFO, response.data);
+    }
   },
 };
