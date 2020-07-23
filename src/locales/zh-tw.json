@@ -1,0 +1,10 @@
+{
+  "message": {
+    "language": "繁體中文",
+    "quantity": "數量",
+    "list": "您好, {0}!",
+    "named": "您好, {name}!",
+    "linked": ":@:message.named 你好嗎?",
+    "plural": "沒有香蕉 | {n} 根香蕉 | {n} 根香蕉"
+  }
+}
