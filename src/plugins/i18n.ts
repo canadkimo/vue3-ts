@@ -1,6 +1,7 @@
 import { createI18n } from 'vue-i18n';
 import zhTW from '@/locales/en-us.json';
 import enUS from '@/locales/zh-tw.json';
+import { LocalStorageName } from './storage';
 
 export type AcceptedLanguages = 'en-us' | 'zh-tw';
 export const languages: Array<AcceptedLanguages | string> = ['en-us', 'zh-tw'];
@@ -18,14 +19,14 @@ export const i18n = createI18n({
 export const changeLang = (lang: AcceptedLanguages) => {
   if (languages.includes(lang)) {
     i18n.global.locale.value = lang;
-    localStorage.setItem('i18nLang', lang);
+    localStorage.setItem(LocalStorageName.i18nLang, lang);
     return true;
   }
   return false;
 };
 
 export const getLocalStorageLang = () => {
-  const lang = localStorage.getItem('i18nLang') as AcceptedLanguages;
+  const lang = localStorage.getItem(LocalStorageName.i18nLang) as AcceptedLanguages;
   if (lang && languages.includes(lang)) {
     return lang;
   }
@@ -58,7 +59,7 @@ export const getUserLang = (pathLang?: AcceptedLanguages) => {
   } else {
     lang = defaultLang;
   }
-  localStorage.setItem('i18nLang', lang);
+  localStorage.setItem(LocalStorageName.i18nLang, lang);
 
   return defaultLang;
 };
