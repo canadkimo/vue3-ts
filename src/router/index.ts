@@ -3,6 +3,7 @@ import {
   languages, getUserLang, AcceptedLanguages, getLocalStorageLang,
 } from '@/plugins/i18n';
 import Root from '@/Root.vue';
+import NotFound from '@/views/NotFound.vue';
 import userRoutes from './user';
 
 const languageOptions = languages.join('|');
@@ -57,21 +58,16 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Home',
         component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
       },
-      {
-        path: 'about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-      },
       ...userRoutes,
     ],
   },
   {
-    path: '/:anythingElse',
-    component: Root,
-    redirect: '/',
+    path: '/404',
+    component: NotFound,
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/404',
   },
 ];
 
@@ -79,18 +75,5 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-
-// router.beforeEach((to, from, next) => {
-//   const defaultLang = 'zh-tw';
-//   const lang = to.params.lang?.toString();
-
-//   if (languages.includes(lang)) {
-//     if (i18n.global.locale.value !== lang) {
-//       i18n.global.locale.value = lang;
-//     }
-//     return next();
-//   }
-//   return next({ path: `/${defaultLang}` });
-// });
 
 export default router;
