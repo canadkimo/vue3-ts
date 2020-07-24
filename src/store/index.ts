@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
-  createStore, Store as VuexStore, CommitOptions, DispatchOptions, ActionContext,
+  createStore, Store as VuexStore, CommitOptions, DispatchOptions,
 } from 'vuex';
 import { state } from './state';
 import { mutations, Mutations } from './mutations';
