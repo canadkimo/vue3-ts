@@ -3,10 +3,11 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <div>
+      {{ locale }}
       {{ t('message.language') }}
       {{ t('message.plural', { n: 10 }) }}
       {{ t('message.plural', { n: 0 }) }}
-      <router-link :to="{ name: 'User' }">User</router-link>
+      <router-link to="/user">User</router-link>
     </div>
   </div>
 </template>

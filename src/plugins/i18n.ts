@@ -1,12 +1,12 @@
 import { createI18n } from 'vue-i18n';
-import zhTW from '@/locales/en-us.json';
-import enUS from '@/locales/zh-tw.json';
+import zhTW from '@/locales/zh-tw.json';
+import enUS from '@/locales/en-us.json';
 import { LocalStorageName } from './storage';
 
 export type AcceptedLanguages = 'en-us' | 'zh-tw';
 export const languages: Array<AcceptedLanguages | string> = ['en-us', 'zh-tw'];
 
-const defaultLang = 'zh-tw';
+export const defaultLang = 'zh-tw';
 export const i18n = createI18n({
   locale: defaultLang,
   availableLocales: languages,
@@ -18,8 +18,8 @@ export const i18n = createI18n({
 
 export const changeLang = (lang: AcceptedLanguages) => {
   if (languages.includes(lang)) {
-    i18n.global.locale.value = lang;
     localStorage.setItem(LocalStorageName.i18nLang, lang);
+    i18n.global.locale.value = lang;
     return true;
   }
   return false;
@@ -36,7 +36,7 @@ export const getLocalStorageLang = () => {
 export const getBrowserLang = () => {
   const browserLangs = navigator.languages
     .filter((lang) => languages.includes(lang.toLowerCase()));
-  const browserLang = browserLangs?.[0].toLowerCase() as AcceptedLanguages;
+  const browserLang = browserLangs?.[0]?.toLowerCase() as AcceptedLanguages;
   return browserLang ?? null;
 };
 
