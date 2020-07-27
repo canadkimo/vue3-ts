@@ -14,7 +14,7 @@
       <li>Sur Name: {{ userBasicInfo.surName }}</li>
       <li>Email: {{ userBasicInfo.email }}</li>
     </ul>
-     <router-link to="/">Home</router-link>
+    <router-link to="/">Home</router-link>
   </div>
 </template>
 <script lang="ts">
